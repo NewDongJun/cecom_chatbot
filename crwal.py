@@ -35,7 +35,27 @@ recent_notice_url = recent_notice.find("td",{"class":"aleft"})
 
 page_number = str(recent_notice_url.a)[65:69]
 notice_title = str(recent_notice_url.a)[139:-12]
-print(notice_title)
+
+
+#0min마다 전송
+def check_time(curr_minute):
+    dt = datetime.datetime.now()
+
+    if curr_minute != dt.minute:
+        print(notice_title)
+        curr_minute = dt.minute
+
+        minute = 0
+
+        if curr_minute == 60 :
+            minute = 0
+        else :
+            minute = curr_minute
+
+    #threading.Timer(1, check_time, args=[curr_minute]).start()
+
+check_time(-1)
+#print(notice_title)
 print("-----------------------------------------")
 #print(page_number)
 
