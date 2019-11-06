@@ -35,6 +35,8 @@ recent_notice_url = recent_notice.find("td",{"class":"aleft"})
 
 page_number = str(recent_notice_url.a)[65:69]
 notice_title = str(recent_notice_url.a)[139:-12]
+past_title = '0'
+complete_url = "https://cse.cau.ac.kr/sub05/sub0501.php" + "?dir=bbs&nmode=view&code=oktomato_bbs05&uid=" + page_number + "&search=&keyword=&temp1=&offset=1"
 
 
 #0min마다 전송
@@ -42,25 +44,31 @@ def check_time(curr_minute):
     dt = datetime.datetime.now()
 
     if curr_minute != dt.minute:
-        print(notice_title)
         curr_minute = dt.minute
 
         minute = 0
-
+        global past_title
+        if (past_title != notice_title) :
+            print(notice_title)
+            print(complete_url)
+            past_title = notice_title
+            
         if curr_minute == 60 :
             minute = 0
         else :
             minute = curr_minute
 
     #threading.Timer(1, check_time, args=[curr_minute]).start()
-
-check_time(-1)
+while(1) :
+    check_time(1)
+#check_time(-1)
 #print(notice_title)
 print("-----------------------------------------")
 #print(page_number)
 
-complete_url = "https://cse.cau.ac.kr/sub05/sub0501.php" + "?dir=bbs&nmode=view&code=oktomato_bbs05&uid=" + page_number + "&search=&keyword=&temp1=&offset=1"
-print(complete_url)
+#complete_url = "https://cse.cau.ac.kr/sub05/sub0501.php" + "?dir=bbs&nmode=view&code=oktomato_bbs05&uid=" + page_number + "&search=&keyword=&temp1=&offset=1"
+
+#print(complete_url)
 
 
 
